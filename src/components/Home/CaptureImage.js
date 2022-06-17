@@ -1,6 +1,6 @@
 import {Button} from '@rneui/themed';
 import React from 'react';
-import {captureImage} from '@utility//CatureImageAndSave';
+import {captureImage} from '@utility//CaptureImageAndSave';
 
 const CaptureImage = () => {
   return (
