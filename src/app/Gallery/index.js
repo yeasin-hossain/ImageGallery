@@ -45,7 +45,7 @@ const Gallery = () => {
       const lastVisitPage = await getFromLocalStore('paginate');
 
       setUrls(result?.edges.map(image => image?.node?.image?.uri));
-      setPaginate(lastVisitPage);
+      lastVisitPage && setPaginate(parseInt(lastVisitPage));
     })();
   }, [navigation]);
 
