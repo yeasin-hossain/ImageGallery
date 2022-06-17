@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  Alert,
+  FlatList,
+  Linking,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import CameraRoll from '@react-native-community/cameraroll';
 import {Image} from '@rneui/base';
 import CustomModal from '@components/modal';
@@ -8,6 +14,7 @@ import {getFromLocalStore} from '@utility//LocalStore';
 import {hasWaitePermission} from '@utility//waitePermission';
 import {useNavigation} from '@react-navigation/native';
 import NotFound from '@components/NoFound';
+import {appUrls} from '@utility//appUrls';
 
 const Gallery = () => {
   const navigation = useNavigation();
@@ -20,7 +27,14 @@ const Gallery = () => {
   useEffect(() => {
     (async () => {
       if (!(await hasWaitePermission())) {
-        Alert.alert('Permission is required');
+        Alert.alert('Permission is required', ' ', [
+          {
+            text: 'Cancel',
+            onPress: () => navigation.navigate(appUrls.home),
+            style: 'cancel',
+          },
+          {text: 'Open Setting', onPress: () => Linking.openSettings()},
+        ]);
         return;
       }
 
