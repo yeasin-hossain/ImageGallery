@@ -7,7 +7,7 @@ export const hasWaitePermission = async () => {
   if (hasPermission) {
     return true;
   }
-
   const status = await PermissionsAndroid.request(permission);
+
   return status === 'granted';
 };

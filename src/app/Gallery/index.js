@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import {Alert, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import CameraRoll from '@react-native-community/cameraroll';
 import {Image} from '@rneui/base';
 import CustomModal from '@components/modal';
 import Pagination from '@components/Pagination';
 import {getFromLocalStore} from '@utility//LocalStore';
+import {hasWaitePermission} from '@utility//waitePermission';
+import {useNavigation} from '@react-navigation/native';
+import NotFound from '@components/NoFound';
 
 const Gallery = () => {
+  const navigation = useNavigation();
+
   const [imageUrls, setUrls] = useState([]);
   const [paginate, setPaginate] = useState(0);
   const [openModal, setOpenModal] = useState(false);
@@ -14,16 +19,21 @@ const Gallery = () => {
 
   useEffect(() => {
     (async () => {
+      if (!(await hasWaitePermission())) {
+        Alert.alert('Permission is required');
+        return;
+      }
+
       const result = await CameraRoll.getPhotos({
         assetType: 'Photos',
         first: 10000,
       });
       const lastVisitPage = await getFromLocalStore('paginate');
 
+      setUrls(result?.edges.map(image => image?.node?.image?.uri));
       setPaginate(lastVisitPage);
-      setUrls(result.edges.map(image => image.node.image.uri));
     })();
-  }, []);
+  }, [navigation]);
 
   return (
     <>
@@ -44,6 +54,7 @@ const Gallery = () => {
             />
           </TouchableOpacity>
         )}
+        ListEmptyComponent={<NotFound />}
         keyExtractor={item => item}
       />
       <CustomModal openModal={openModal} closeModal={setOpenModal}>
