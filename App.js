@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '@app/Home';
 import Gallery from '@app/Gallery';
+import {appUrls} from '@utility//appUrls';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -12,12 +13,12 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            name="Home"
+            name={appUrls.home}
             component={Home}
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="Gallery"
+            name={appUrls.gallery}
             component={Gallery}
             options={{headerShown: false}}
           />

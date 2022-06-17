@@ -1,7 +1,9 @@
-import {View} from 'react-native';
 import React from 'react';
-import {ThemeProvider, createTheme} from '@rneui/themed';
+import {ThemeProvider, createTheme, Button} from '@rneui/themed';
 import CaptureImage from '@components/Home/CaptureImage';
+import {useNavigation} from '@react-navigation/native';
+import {appUrls} from '@utility//appUrls';
+import {StyleSheet, View} from 'react-native';
 
 const theme = createTheme({
   Button: {
@@ -15,12 +17,26 @@ const theme = createTheme({
 });
 
 const Home = () => {
+  const navigation = useNavigation();
+
   return (
-    <View>
-      <ThemeProvider theme={theme} />
-      <CaptureImage />
-    </View>
+    <ThemeProvider theme={theme}>
+      <View style={styles.homeContainer}>
+        <CaptureImage />
+        <Button onPress={() => navigation.navigate(appUrls.gallery)}>
+          Gallery
+        </Button>
+      </View>
+    </ThemeProvider>
   );
 };
 
 export default Home;
+
+const styles = StyleSheet.create({
+  homeContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

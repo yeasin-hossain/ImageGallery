@@ -1,4 +1,4 @@
-import {Button} from '@rneui/base';
+import {Button} from '@rneui/themed';
 import {hasWaitePermission} from '@utility//waitePermission';
 import React from 'react';
 import {Platform} from 'react-native';
@@ -21,7 +21,7 @@ const CaptureImage = () => {
     });
   };
   return (
-    <Button onPress={openCamera} radius="md" color="secondary">
+    <Button onPress={openCamera} radius="md" color="success">
       Capture Image
     </Button>
   );

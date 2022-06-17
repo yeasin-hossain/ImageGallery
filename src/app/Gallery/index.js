@@ -16,6 +16,7 @@ const Gallery = () => {
       setUrl(result.edges.map(image => image.node.image.uri));
     })();
   }, []);
+
   return (
     <FlatList
       data={imageUrl}
