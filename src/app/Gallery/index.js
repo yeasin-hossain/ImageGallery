@@ -2,9 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import CameraRoll from '@react-native-community/cameraroll';
 import {Image} from '@rneui/base';
+import CustomModal from '@components/modal';
 
 const Gallery = () => {
   const [imageUrl, setUrl] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -18,20 +21,36 @@ const Gallery = () => {
   }, []);
 
   return (
-    <FlatList
-      data={imageUrl}
-      renderItem={({item}) => (
-        <TouchableOpacity style={styles.imageContainer}>
-          <Image
-            source={{
-              uri: item,
-            }}
-            style={styles.image}
-          />
-        </TouchableOpacity>
-      )}
-      keyExtractor={item => item}
-    />
+    <>
+      <FlatList
+        data={imageUrl}
+        renderItem={({item}) => (
+          <TouchableOpacity
+            style={styles.imageContainer}
+            onPress={() => {
+              setOpenModal(true);
+              setSelectedImage(item);
+            }}>
+            <Image
+              source={{
+                uri: item,
+              }}
+              style={styles.image}
+            />
+          </TouchableOpacity>
+        )}
+        keyExtractor={item => item}
+      />
+
+      <CustomModal openModal={openModal} closeModal={setOpenModal}>
+        <Image
+          source={{
+            uri: selectedImage,
+          }}
+          style={styles.image}
+        />
+      </CustomModal>
+    </>
   );
 };
 
