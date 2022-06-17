@@ -3,9 +3,12 @@ import {FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import CameraRoll from '@react-native-community/cameraroll';
 import {Image} from '@rneui/base';
 import CustomModal from '@components/modal';
+import Pagination from '@components/Pagination';
+import {getFromLocalStore} from '@utility//LocalStore';
 
 const Gallery = () => {
-  const [imageUrl, setUrl] = useState([]);
+  const [imageUrls, setUrls] = useState([]);
+  const [paginate, setPaginate] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
 
@@ -13,17 +16,19 @@ const Gallery = () => {
     (async () => {
       const result = await CameraRoll.getPhotos({
         assetType: 'Photos',
-        first: 10,
+        first: 10000,
       });
+      const lastVisitPage = await getFromLocalStore('paginate');
 
-      setUrl(result.edges.map(image => image.node.image.uri));
+      setPaginate(lastVisitPage);
+      setUrls(result.edges.map(image => image.node.image.uri));
     })();
   }, []);
 
   return (
     <>
       <FlatList
-        data={imageUrl}
+        data={imageUrls.slice(paginate, paginate + 4)}
         renderItem={({item}) => (
           <TouchableOpacity
             style={styles.imageContainer}
@@ -41,7 +46,6 @@ const Gallery = () => {
         )}
         keyExtractor={item => item}
       />
-
       <CustomModal openModal={openModal} closeModal={setOpenModal}>
         <Image
           source={{
@@ -50,6 +54,11 @@ const Gallery = () => {
           style={styles.image}
         />
       </CustomModal>
+      <Pagination
+        paginate={paginate}
+        setPaginate={setPaginate}
+        dataLength={imageUrls.length}
+      />
     </>
   );
 };
@@ -67,5 +76,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     padding: 0.4,
+  },
+  nextPrev: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  paginationLabel: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
