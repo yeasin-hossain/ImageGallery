@@ -13,7 +13,6 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   useEffect(() => {
     hasWaitePermission();
-    console.log(LottieSplashScreen);
     LottieSplashScreen.hide(); // here
   }, []);
 
