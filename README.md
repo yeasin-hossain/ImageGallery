@@ -23,3 +23,4 @@ App features:
  - [reactnavigation](https://reactnavigation.org/)
  - [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
  - [rneui](https://reactnativeelements.com/)
+ - [react-native-lottie-splash-screen](https://www.npmjs.com/package/react-native-lottie-splash-screen)
