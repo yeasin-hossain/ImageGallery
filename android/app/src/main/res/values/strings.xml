@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Strativ</string>
+    <color name="white">#FFFFFF</color>
 </resources>

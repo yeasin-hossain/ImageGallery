@@ -6,11 +6,15 @@ import Home from '@app/Home';
 import Gallery from '@app/Gallery';
 import {appUrls} from '@utility//appUrls';
 import {hasWaitePermission} from '@utility//waitePermission';
+import LottieSplashScreen from 'react-native-lottie-splash-screen';
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   useEffect(() => {
     hasWaitePermission();
+    console.log(LottieSplashScreen);
+    LottieSplashScreen.hide(); // here
   }, []);
 
   return (

@@ -45,6 +45,7 @@ const Gallery = () => {
       const lastVisitPage = await getFromLocalStore('paginate');
 
       setUrls(result?.edges.map(image => image?.node?.image?.uri));
+      // eslint-disable-next-line radix
       lastVisitPage && setPaginate(parseInt(lastVisitPage));
     })();
   }, [navigation]);

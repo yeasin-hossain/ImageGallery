@@ -23,6 +23,8 @@ target 'Sayburgh' do
 
   pod 'react-native-cameraroll', :path => '../node_modules/@react-native-community/cameraroll'
 
+  pod 'react-native-lottie-splash-screen', :path => '../node_modules/react-native-lottie-splash-screen'
+
   target 'SayburghTests' do
     inherit! :complete
     # Pods for testing
